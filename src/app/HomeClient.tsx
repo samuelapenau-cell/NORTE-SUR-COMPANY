@@ -76,65 +76,80 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
         </div>
 
         <div className="max-w-[1400px] mx-auto px-6 w-full relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-end">
-            <div className="lg:col-span-7">
-              <p className="text-[10px] font-mono uppercase tracking-[3px] text-stone mb-4 animate-fade-in">
-                Maracay, Venezuela — Est. 2023
-              </p>
-              <h1 className="font-display text-[clamp(3rem,12vw,9rem)] leading-[0.85] text-paper uppercase tracking-[-2px]">
-                NORTE
-                <br />
-                <span className="text-neon">SUR</span>
-              </h1>
-              <div className="h-[1px] w-24 bg-neon mt-8 mb-6" />
-              <p className="text-sm text-stone font-body max-w-[440px] leading-relaxed">
-                Streetwear premium hecho en Venezuela. Franelas oversize, hoodies, joggers y más. 
-                Distribuidores N°1 de oversize en Maracay.
-              </p>
-              <div className="flex flex-wrap gap-3 mt-8">
-                <Link
-                  href="/tienda"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-neon text-ink text-xs font-mono uppercase tracking-[2px] hover:bg-neon-dim transition-colors duration-300"
-                >
-                  Explorar tienda
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-                </Link>
-                <a
-                  href={`https://wa.me/${STORE.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-gravel text-gravel hover:text-paper hover:border-paper text-xs font-mono uppercase tracking-[2px] transition-colors duration-300"
-                >
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-            <div className="lg:col-span-5 mt-12 lg:mt-0 lg:text-right">
-              <div className="inline-flex flex-col gap-2">
-                <span className="text-[10px] font-mono uppercase tracking-[2px] text-stone">Categorías</span>
-                {(categories.length > 0 ? categories : CATEGORIES_SLIM).map((c, i) => {
-                  const name = typeof c === "object" && "name" in c ? (c as Category).name : (c as typeof CATEGORIES_SLIM[0]).name;
-                  const slug = typeof c === "object" && "slug" in c ? (c as Category).slug || "" : (c as typeof CATEGORIES_SLIM[0]).slug;
-                  const count = typeof c === "object" && "name" in c ? "" : (c as typeof CATEGORIES_SLIM[0]).count;
-                  return (
-                    <Link
-                      key={name}
-                      href={`/tienda?categoria=${slug}`}
-                      className="group flex items-center gap-4 text-right justify-end"
-                    >
-                      <span className="text-[10px] text-stone/40 font-mono">{count}</span>
-                      <span className="font-display text-3xl md:text-4xl text-gravel group-hover:text-paper transition-colors duration-300 uppercase tracking-[1px]">
-                        {name}
-                      </span>
-                      <span className="w-4 h-[1px] bg-gravel group-hover:bg-neon transition-colors duration-300" />
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
+          <p className="text-[10px] font-mono uppercase tracking-[3px] text-stone mb-4 animate-fade-in">
+            Maracay, Venezuela — Est. 2023
+          </p>
+          <h1 className="font-display text-[clamp(3rem,12vw,9rem)] leading-[0.85] text-paper uppercase tracking-[-2px]">
+            NORTE
+            <br />
+            <span className="text-neon">SUR</span>
+          </h1>
+          <div className="h-[1px] w-24 bg-neon mt-8 mb-6" />
+          <p className="text-sm text-stone font-body max-w-[440px] leading-relaxed">
+            Streetwear premium hecho en Venezuela. Franelas oversize, hoodies, joggers y más. 
+            Distribuidores N°1 de oversize en Maracay.
+          </p>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <Link
+              href="/tienda"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-neon text-ink text-xs font-mono uppercase tracking-[2px] hover:bg-neon-dim transition-colors duration-300"
+            >
+              Explorar tienda
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            </Link>
+            <a
+              href={`https://wa.me/${STORE.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-gravel text-gravel hover:text-paper hover:border-paper text-xs font-mono uppercase tracking-[2px] transition-colors duration-300"
+            >
+              WhatsApp
+            </a>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon/30 to-transparent" />
+      </section>
+
+      {/* ── CATEGORÍAS ── */}
+      <section className="py-16 md:py-20 relative overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-[3px] text-stone">Categorías</span>
+            </div>
+            <Link href="/tienda" className="text-[10px] font-mono uppercase tracking-[2px] text-gravel hover:text-paper transition-colors">
+              Ver todo →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            {(categories.length > 0 ? categories : CATEGORIES_SLIM).map((c) => {
+              const name = typeof c === "object" && "name" in c ? (c as Category).name : (c as typeof CATEGORIES_SLIM[0]).name;
+              const slug = typeof c === "object" && "slug" in c ? (c as Category).slug || "" : (c as typeof CATEGORIES_SLIM[0]).slug;
+              const count = typeof c === "object" && "name" in c ? "" : (c as typeof CATEGORIES_SLIM[0]).count;
+              return (
+                <Link
+                  key={name}
+                  href={`/tienda?categoria=${slug}`}
+                  className="group relative p-5 md:p-6 bg-smoke border border-border hover:border-neon/40 transition-all duration-500 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-neon/[0.02] to-transparent group-hover:from-neon/[0.06] transition-all duration-500" />
+                  <div className="relative z-10">
+                    <span className="font-display text-xl md:text-2xl text-gravel group-hover:text-paper transition-colors duration-300 uppercase tracking-[1px] block leading-tight">
+                      {name}
+                    </span>
+                    <div className="h-[1px] w-6 bg-gravel group-hover:bg-neon transition-all duration-300 mt-3 mb-2" />
+                    <span className="text-[9px] font-mono uppercase tracking-[2px] text-stone group-hover:text-stone/80 transition-colors duration-300">
+                      {count ? `${count} productos` : "Ver colección"}
+                    </span>
+                  </div>
+                  <div className="absolute -bottom-4 -right-4 text-[5rem] md:text-[7rem] font-display text-gravel/5 group-hover:text-neon/5 transition-colors duration-500 select-none leading-none pointer-events-none">
+                    {name[0]}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
       {/* ── STATEMENT ── */}
