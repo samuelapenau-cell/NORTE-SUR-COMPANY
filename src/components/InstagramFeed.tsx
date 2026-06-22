@@ -73,6 +73,7 @@ export function InstagramFeed() {
               referrerPolicy="no-referrer"
               loading="lazy"
               fill
+              unoptimized
               className="object-cover group-hover:brightness-75 transition-all duration-300"
               sizes="(max-width: 768px) 50vw, 25vw"
             />

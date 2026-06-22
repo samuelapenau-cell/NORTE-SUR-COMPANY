@@ -10,6 +10,9 @@ export async function GET(req: NextRequest) {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         Accept: "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
+        Referer: "https://www.instagram.com/",
+        Origin: "https://www.instagram.com",
+        "Accept-Language": "en-US,en;q=0.9,es;q=0.8",
       },
     });
 

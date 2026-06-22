@@ -1,38 +1,32 @@
 import { NextResponse } from "next/server";
 
-const POSTS = [
-  { url: "https://www.instagram.com/p/DZ257y5nb0f/", shortcode: "DZ257y5nb0f" },
-  { url: "https://www.instagram.com/p/DZlagyEnW0_/", shortcode: "DZlagyEnW0_" },
-  { url: "https://www.instagram.com/p/DYdPSHEHfMk/", shortcode: "DYdPSHEHfMk" },
-  { url: "https://www.instagram.com/p/DXU3U7iDgC7/", shortcode: "DXU3U7iDgC7" },
-  { url: "https://www.instagram.com/p/DUrUJqCgXgQ/", shortcode: "DUrUJqCgXgQ" },
-  { url: "https://www.instagram.com/p/DR0ao3sgVHc/", shortcode: "DR0ao3sgVHc" },
-  { url: "https://www.instagram.com/p/DRaWkUiAdZd/", shortcode: "DRaWkUiAdZd" },
-  { url: "https://www.instagram.com/p/DQNT4RSgY_z/", shortcode: "DQNT4RSgY_z" },
+const SHORTCODES = [
+  "DZ257y5nb0f", "DZlagyEnW0_", "DYdPSHEHfMk", "DXU3U7iDgC7",
+  "DUrUJqCgXgQ", "DR0ao3sgVHc", "DRaWkUiAdZd", "DQNT4RSgY_z",
 ];
 
 const cache = new Map<string, { data: any; expiry: number }>();
 const CACHE_TTL = 86_400_000;
 
-async function fetchOgImage(url: string): Promise<string | null> {
+async function fetchMediaUrl(shortcode: string): Promise<string | null> {
   try {
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-      },
-      signal: AbortSignal.timeout(8000),
-      next: { revalidate: 86400 },
-    });
-    const html = await res.text();
-    const m = html.match(
-      /<meta[^>]+property="og:image"[^>]+content="([^"]+)"/
+    const res = await fetch(
+      `https://www.instagram.com/p/${shortcode}/media/?size=l`,
+      {
+        method: "GET",
+        redirect: "manual",
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        signal: AbortSignal.timeout(8000),
+      }
     );
-    const m2 = html.match(
-      /<meta[^>]+content="([^"]+)"[^>]+property="og:image"/
-    );
-    const raw = (m && m[1]) || (m2 && m2[1]) || null;
-    return raw ? raw.replace(/&amp;/g, "&") : null;
+    if (res.status === 302) {
+      const location = res.headers.get("location");
+      return location || null;
+    }
+    return null;
   } catch {
     return null;
   }
@@ -47,21 +41,24 @@ export async function GET() {
     });
   }
 
-  const posts = await Promise.all(
-    POSTS.map(async (post) => {
-      const image = await fetchOgImage(post.url);
-      const proxied =
-        image?.startsWith("http")
-          ? `/api/instagram/image?url=${encodeURIComponent(image)}`
-          : null;
+  const results = await Promise.allSettled(
+    SHORTCODES.map(async (shortcode) => {
+      const mediaUrl = await fetchMediaUrl(shortcode);
+      const proxied = mediaUrl
+        ? `https://www.instagram.com/p/${shortcode}/media/?size=l`
+        : null;
       return {
-        id: post.shortcode,
-        shortcode: post.shortcode,
-        url: `https://instagram.com/p/${post.shortcode}/`,
+        id: shortcode,
+        shortcode,
+        url: `https://instagram.com/p/${shortcode}/`,
         image: proxied,
       };
     })
   );
+
+  const posts = results
+    .filter((r) => r.status === "fulfilled")
+    .map((r: any) => r.value);
 
   const data = { posts };
   cache.set("instagram-posts", { data, expiry: now + CACHE_TTL });
