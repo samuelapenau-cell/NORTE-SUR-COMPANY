@@ -72,6 +72,7 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
           ))}
           <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/70 to-ink/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
+          <div className="absolute inset-0 glow-hero pointer-events-none" />
         </div>
 
         <div className="max-w-[1400px] mx-auto px-6 w-full relative z-10">
@@ -133,17 +134,18 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-border" />
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon/30 to-transparent" />
       </section>
 
       {/* ── STATEMENT ── */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-[1400px] mx-auto px-6">
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 glow-statement pointer-events-none" />
+        <div className="max-w-[1400px] mx-auto px-6 relative z-10">
           <div className="max-w-[900px]">
             <p className="font-display text-[clamp(1.5rem,4vw,3.5rem)] text-paper uppercase leading-[1.1] tracking-[1px]">
               CREADOS PARA LA GRANDEZA. NO ES SOLO ROPA, ES UNA DECLARACIÓN.
             </p>
-            <div className="h-[1px] w-16 bg-neon mt-8 mb-6" />
+            <div className="h-[1px] w-16 bg-gradient-to-r from-neon to-transparent mt-8 mb-6" />
             <p className="text-sm text-stone font-body max-w-[500px] leading-relaxed">
               100% algodón premium. Cortes oversize. Producido en Venezuela con estándares globales.
             </p>
@@ -153,7 +155,8 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
 
       {/* ── PRODUCT GRID ── */}
       <SectionErrorBoundary>
-        <section className="py-16 md:py-24 bg-smoke/50">
+        <section className="py-16 md:py-24 bg-smoke/50 relative overflow-hidden">
+          <div className="absolute inset-0 glow-products pointer-events-none" />
           <div className="max-w-[1400px] mx-auto px-6">
             <div className="flex items-end justify-between mb-10">
               <div>
@@ -169,7 +172,7 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
                   const p = item as Product;
                   return (
                     <Link key={p.id} href={`/tienda/${p.slug}`} className="group block">
-                      <div className="aspect-[3/4] bg-smoke border border-border group-hover:border-stone/50 transition-colors duration-300 flex items-center justify-center overflow-hidden relative">
+                      <div className="aspect-[3/4] bg-smoke border border-border group-hover:border-neon/40 group-hover:shadow-[0_0_40px_rgba(0,255,26,0.06)] transition-all duration-500 flex items-center justify-center overflow-hidden relative">
                         <div className="absolute inset-0 bg-gradient-to-br from-neon/[0.03] to-transparent" />
                         {p.images[0] ? (
                           <Image src={p.images[0]} alt={p.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="25vw" />
@@ -194,7 +197,7 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
                 const fake = item as typeof PRODUCTS[0];
                 return (
                   <Link key={i} href="/tienda" className="group block">
-                    <div className="aspect-[3/4] bg-smoke border border-border group-hover:border-stone/50 transition-colors duration-300 flex items-center justify-center overflow-hidden relative">
+                    <div className="aspect-[3/4] bg-smoke border border-border group-hover:border-neon/40 group-hover:shadow-[0_0_40px_rgba(0,255,26,0.06)] transition-all duration-500 flex items-center justify-center overflow-hidden relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-neon/[0.03] to-transparent" />
                       <span className="font-display text-6xl md:text-8xl text-gravel group-hover:text-neon/20 transition-colors duration-500 select-none">
                         NS
@@ -260,7 +263,8 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
 
       {/* ── INSTAGRAM ── */}
       <SectionErrorBoundary>
-        <section className="py-16 md:py-24 bg-smoke/30">
+        <section className="py-16 md:py-24 bg-smoke/30 relative overflow-hidden">
+          <div className="absolute inset-0 glow-instagram pointer-events-none" />
           <div className="max-w-[1400px] mx-auto px-6">
             <div className="flex items-end justify-between mb-10">
               <div>
@@ -299,7 +303,8 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
 
       {/* ── FINAL CTA ── */}
       <section className="py-24 md:py-36 relative overflow-hidden">
-        <div className="max-w-[1400px] mx-auto px-6 text-center">
+        <div className="absolute inset-0 glow-cta pointer-events-none" />
+        <div className="max-w-[1400px] mx-auto px-6 text-center relative z-10">
           <p className="text-[10px] font-mono uppercase tracking-[3px] text-stone mb-6">¿Listo?</p>
           <h2 className="font-display text-[clamp(2.5rem,8vw,6rem)] text-paper uppercase leading-[0.85] tracking-[-2px]">
             Hacé tu

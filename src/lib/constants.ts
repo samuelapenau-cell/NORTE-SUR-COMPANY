@@ -17,7 +17,7 @@ export const STORE = {
     state: "Estado Aragua",
     country: "Venezuela",
   },
-  mapsUrl: "https://maps.app.goo.gl/example",
+  mapsUrl: "https://maps.app.goo.gl/c811kuvegLMrZiCE6",
   hours: {
     weekdays: "9:00 AM - 7:00 PM",
     saturday: "9:00 AM - 5:00 PM",
