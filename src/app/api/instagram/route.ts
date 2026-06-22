@@ -45,7 +45,7 @@ export async function GET() {
     SHORTCODES.map(async (shortcode) => {
       const mediaUrl = await fetchMediaUrl(shortcode);
       const proxied = mediaUrl
-        ? `https://www.instagram.com/p/${shortcode}/media/?size=l`
+        ? `/api/instagram/image?url=${encodeURIComponent(`https://www.instagram.com/p/${shortcode}/media/?size=l`)}`
         : null;
       return {
         id: shortcode,

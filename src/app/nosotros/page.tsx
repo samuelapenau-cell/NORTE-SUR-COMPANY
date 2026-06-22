@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { STORE } from "@/lib/constants";
 
 export default function NosotrosPage() {
@@ -104,10 +105,16 @@ export default function NosotrosPage() {
               })}
             </div>
           </div>
-          <div className="aspect-[4/3] bg-smoke border border-border flex items-center justify-center">
-            <div className="text-center">
-              <span className="font-display text-8xl text-gravel select-none">NS</span>
-              <p className="mt-4 text-[10px] text-gravel font-mono uppercase tracking-[3px]">{STORE.slogan}</p>
+          <div className="aspect-[4/3] bg-smoke border border-border overflow-hidden relative">
+            <Image
+              src="/portada/Screenshot_2026-06-22-14-20-40-030_com.instagram.android-edit.jpg.jpeg"
+              alt="NORTE SUR — Streetwear premium"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-ink via-ink/60 to-transparent pt-12">
+              <p className="text-[10px] text-neon font-mono uppercase tracking-[3px]">{STORE.slogan}</p>
             </div>
           </div>
         </div>
@@ -128,17 +135,18 @@ export default function NosotrosPage() {
               <p>{STORE.address.city}, {STORE.address.state}</p>
               <div className="pt-4 border-t border-border">
                 <p className="text-[10px] font-mono uppercase tracking-[2px] text-neon mb-3">Horarios</p>
-                <p className="text-stone">Lun - Sab: 9:00 AM - 6:00 PM</p>
-                <p className="text-stone">Dom: 10:00 AM - 3:00 PM</p>
+                <p className="text-stone">Lun - Vie: {STORE.hours.weekdays}</p>
+                <p className="text-stone">Sáb: {STORE.hours.saturday}</p>
+                <p className="text-stone">Dom: {STORE.hours.sunday}</p>
               </div>
             </div>
           </div>
           <div className="aspect-[4/3] bg-smoke border border-border overflow-hidden relative">
             <a href={STORE.mapsUrl} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3926.5!2d-67.6024932!3d10.2476515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e803c9b9611f813%3A0xcb82a26485afc729!2sCentro%20Comercial%20Paseo%20Estaci%C3%B3n%20Central!5e0!3m2!1ses!2sve!4v1"
+                src="https://www.google.com/maps?q=10.2526227,-67.6065823&z=17&output=embed"
                 width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
-                title="Ubicacion NORTE SUR"
+                title="Ubicación NORTE SUR — Maracay"
                 className="pointer-events-none opacity-60"
               />
               <div className="absolute inset-0 z-10" />
