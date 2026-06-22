@@ -1,0 +1,2 @@
+Color: Camuflado
+Precio: 70$

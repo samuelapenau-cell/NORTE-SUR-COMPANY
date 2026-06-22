@@ -1,0 +1,2 @@
+Color: Azul Degradado
+Precio: 60$

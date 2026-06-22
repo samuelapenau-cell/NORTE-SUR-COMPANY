@@ -1,0 +1,17 @@
+{
+  "extends": "next/core-web-vitals",
+  "plugins": ["jest"],
+  "env": {
+    "jest": true
+  },
+  "overrides": [
+    {
+      "files": ["src/__tests__/**"],
+      "extends": ["plugin:jest/recommended"],
+      "rules": {
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error"
+      }
+    }
+  ]
+}

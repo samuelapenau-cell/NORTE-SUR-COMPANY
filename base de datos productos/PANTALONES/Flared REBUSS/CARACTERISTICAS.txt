@@ -1,0 +1,2 @@
+Color: Gris
+Precio: 60$

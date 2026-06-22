@@ -1,0 +1,2 @@
+Color: Azul Oscuro
+Precio: 60$

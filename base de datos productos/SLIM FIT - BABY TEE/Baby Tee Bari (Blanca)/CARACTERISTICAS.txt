@@ -1,0 +1,3 @@
+Color: BLANCA
+Precio: 25$
+Tallas: L y XL

@@ -1,0 +1,3 @@
+Color: Azul
+Precio: 60$
+Talla: 34 y 36
