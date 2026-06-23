@@ -165,9 +165,9 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
             priority
             quality={100}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/60 to-ink/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-l from-neon/[0.08] to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/80 to-ink/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-l from-neon/[0.05] to-transparent" />
           <div className="absolute inset-0 grain pointer-events-none" />
         </div>
         <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full py-20 md:py-28">
