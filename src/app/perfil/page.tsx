@@ -57,6 +57,7 @@ export default function PerfilPage() {
     fetch("/api/user/orders")
       .then((r) => r.json())
       .then((data) => setOrders(data.orders || []))
+      .catch(() => setOrders([]))
       .finally(() => setOrdersLoading(false));
 
     fetch("/api/user/profile")
@@ -64,6 +65,7 @@ export default function PerfilPage() {
       .then((data) => {
         if (data.profile) setProfile(data.profile);
       })
+      .catch(() => {})
       .finally(() => setProfileLoading(false));
   }, [user, authLoading, router]);
 

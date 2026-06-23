@@ -201,7 +201,10 @@ export default function IngresarPage() {
         </div>
 
         <button
-          onClick={signInWithGoogle}
+          onClick={async () => {
+            try { await signInWithGoogle(); }
+            catch { setError("Google no está habilitado. Usá correo y contraseña."); }
+          }}
           disabled={submitting || loading}
           className="mt-8 w-full flex items-center justify-center gap-3 px-6 py-3.5 bg-smoke border border-border hover:border-neon/30 hover:bg-neon/[0.02] transition-all duration-300 disabled:opacity-40"
         >

@@ -18,6 +18,7 @@ export function InstagramFeed() {
     fetch("/api/instagram")
       .then((r) => r.json())
       .then((data) => setPosts(data.posts || []))
+      .catch(() => setPosts([]))
       .finally(() => setLoading(false));
   }, []);
 

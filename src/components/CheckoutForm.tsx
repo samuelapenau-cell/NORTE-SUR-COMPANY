@@ -103,7 +103,8 @@ export function CheckoutForm({ onBack }: CheckoutFormProps) {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Error al crear la orden");
+        const msg = data.detail ? `${data.error}: ${data.detail}` : data.error;
+        throw new Error(msg || "Error al crear la orden");
       }
 
       const data = await res.json();

@@ -93,7 +93,8 @@ create table if not exists orders (
   customer_phone text not null,
   customer_address text not null,
   total decimal(10,2) not null,
-  status text default 'pending' check (status in ('pending','confirmed','shipped','delivered','cancelled')),
+  status text default 'pending' check (status in ('pending','confirmed','processing','shipped','delivered','cancelled')),
+  tracking_token uuid default gen_random_uuid() not null,
   created_at timestamptz default now()
 );
 
@@ -156,10 +157,108 @@ create or replace trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
--- 8. INDEXES
+-- 8. ADD ROLE TO PROFILES
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS role text DEFAULT 'customer' CHECK (role IN ('customer', 'admin'));
+
+-- 9. ADD avg_rating AND review_count TO PRODUCTS
+ALTER TABLE products ADD COLUMN IF NOT EXISTS avg_rating numeric(2,1) DEFAULT 0;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS review_count integer DEFAULT 0;
+
+-- 10. REVIEWS
+create table if not exists reviews (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  product_id uuid NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+  author_name text NOT NULL,
+  rating integer NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  comment text,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+alter table reviews enable row level security;
+
+create policy "Reviews are public for viewing"
+  on reviews for select
+  using (true);
+
+create policy "Authenticated users can create reviews"
+  on reviews for insert
+  with check (auth.role() = 'authenticated');
+
+-- 11. COUPONS
+create table if not exists coupons (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  code text UNIQUE NOT NULL,
+  discount_type text NOT NULL CHECK (discount_type IN ('percentage', 'fixed')),
+  discount_value numeric(10,2) NOT NULL CHECK (discount_value > 0),
+  min_purchase numeric(10,2) DEFAULT 0,
+  max_uses integer DEFAULT NULL,
+  used_count integer DEFAULT 0,
+  active boolean DEFAULT true,
+  expires_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+alter table coupons enable row level security;
+
+create policy "Coupons are public for viewing"
+  on coupons for select
+  using (true);
+
+create policy "Coupons are manageable by admin"
+  on coupons for all
+  using (auth.role() = 'authenticated');
+
+-- 12. RATE LIMITS
+create table if not exists rate_limits (
+  key text primary key,
+  count integer default 1,
+  reset_at timestamptz not null
+);
+
+-- 13. DECREMENT STOCK FUNCTION
+create or replace function decrement_stock(variant_id uuid, qty int)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  update product_variants
+  set stock = greatest(0, stock - qty)
+  where id = variant_id;
+end;
+$$;
+
+-- 14. INCREMENT COUPON USAGE FUNCTION
+create or replace function increment_coupon_usage(coupon_id uuid)
+returns void
+language plpgsql
+as $$
+begin
+  update coupons set used_count = used_count + 1 where id = coupon_id;
+end;
+$$;
+
+-- 15. CLEANUP RATE LIMITS FUNCTION
+create or replace function public.cleanup_rate_limits()
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  delete from public.rate_limits where reset_at < now();
+end;
+$$;
+
+-- 16. INDEXES
 create index if not exists idx_products_category on products(category_id);
 create index if not exists idx_products_active on products(active);
 create index if not exists idx_products_featured on products(featured);
 create index if not exists idx_variants_product on product_variants(product_id);
 create index if not exists idx_orders_user on orders(user_id);
 create index if not exists idx_orders_status on orders(status);
+create unique index if not exists idx_orders_tracking_token on orders(tracking_token);
+create index if not exists idx_reviews_product_id on reviews(product_id);
+create index if not exists idx_rate_limits_reset_at on rate_limits(reset_at);
