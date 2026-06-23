@@ -27,14 +27,23 @@ export async function GET(request: NextRequest) {
 
       const { error } = await supabase.auth.exchangeCodeForSession(code);
       if (!error) {
-        return NextResponse.redirect(`${origin}${next}`);
+        const response = NextResponse.redirect(`${origin}${next}`);
+        request.cookies.getAll().forEach(({ name, value }) => {
+          response.cookies.set(name, value);
+        });
+        return response;
       }
 
       console.error("Auth callback error:", error);
+      return NextResponse.redirect(
+        `${origin}/ingresar?error=auth&msg=${encodeURIComponent(error.message)}`
+      );
     } catch (err) {
       console.error("Auth callback exception:", err);
     }
+
+    return NextResponse.redirect(`${origin}/ingresar?error=exception`);
   }
 
-  return NextResponse.redirect(`${origin}/?error=auth`);
+  return NextResponse.redirect(`${origin}/ingresar?error=no-code`);
 }

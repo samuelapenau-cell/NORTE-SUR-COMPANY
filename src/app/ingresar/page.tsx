@@ -26,8 +26,16 @@ export default function IngresarPage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      if (params.has("error") && params.get("error") === "auth") {
-        setError("Error al iniciar sesión con Google. Probá con correo y contraseña.");
+      if (params.has("error")) {
+        const code = params.get("error");
+        const msg = params.get("msg");
+        if (code === "auth") {
+          setError(msg ? `Error: ${msg}` : "Error al iniciar sesión con Google. Probá con correo y contraseña.");
+        } else if (code === "exception") {
+          setError("Error inesperado en la autenticación. Probá de nuevo.");
+        } else if (code === "no-code") {
+          setError("No se recibió el código de autorización. Probá de nuevo.");
+        }
         window.history.replaceState({}, "", window.location.pathname);
       }
     }
