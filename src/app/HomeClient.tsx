@@ -207,9 +207,12 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
                         {p.images[0] ? (
                           <Image src={p.images[0]} alt={p.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="25vw" />
                         ) : (
-                          <span className="font-display text-6xl md:text-8xl text-gravel group-hover:text-neon/20 transition-colors duration-500 select-none">
-                            NS
-                          </span>
+                          <div className="flex flex-col items-center justify-center gap-2 p-6">
+                            <Image src="/logo.png" alt="" width={36} height={36} className="opacity-15" />
+                            <span className="text-[8px] font-mono uppercase tracking-[2px] text-paper/10 text-center leading-relaxed">
+                              {p.name}
+                            </span>
+                          </div>
                         )}
                         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-ink via-ink/60 to-transparent pt-12">
                           <span className="text-[9px] font-mono uppercase tracking-[2px] text-stone">{p.category?.name || ""}</span>
@@ -229,9 +232,12 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
                   <Link key={i} href="/tienda" className="group block">
                     <div className="aspect-[3/4] bg-smoke border border-border group-hover:border-neon/40 group-hover:shadow-[0_0_40px_rgba(0,255,26,0.06)] transition-all duration-500 flex items-center justify-center overflow-hidden relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-neon/[0.03] to-transparent" />
-                      <span className="font-display text-6xl md:text-8xl text-gravel group-hover:text-neon/20 transition-colors duration-500 select-none">
-                        NS
-                      </span>
+                      <div className="flex flex-col items-center justify-center gap-2 p-6">
+                        <Image src="/logo.png" alt="" width={36} height={36} className="opacity-15" />
+                        <span className="text-[8px] font-mono uppercase tracking-[2px] text-paper/10 text-center leading-relaxed">
+                          {fake.name}
+                        </span>
+                      </div>
                       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-ink via-ink/60 to-transparent pt-12">
                         <span className="text-[9px] font-mono uppercase tracking-[2px] text-stone">{fake.cat}</span>
                       </div>
