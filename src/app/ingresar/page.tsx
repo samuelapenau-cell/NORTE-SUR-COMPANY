@@ -24,6 +24,16 @@ export default function IngresarPage() {
   const [registered, setRegistered] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has("error") && params.get("error") === "auth") {
+        setError("Error al iniciar sesión con Google. Probá con correo y contraseña.");
+        window.history.replaceState({}, "", window.location.pathname);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (!loading && user) {
       const userEmail = user.email?.toLowerCase() || "";
       router.push(ADMIN_EMAILS.includes(userEmail) ? "/admin" : "/perfil");
