@@ -144,7 +144,7 @@ export default function PerfilPage() {
         <div className="grid grid-cols-3 gap-3 md:gap-4 mb-10">
           <div className="bg-smoke/50 border border-border/30 rounded-sm p-4 md:p-5">
             <span className="text-[9px] font-mono uppercase tracking-[2px] text-neon/50">Pedidos</span>
-            <p className="mt-1.5 font-display text-2xl md:text-3xl text-paper tracking-[1px] tabular-nums">
+            <p className="mt-1.5 font-display text-xl md:text-3xl text-paper tracking-[1px] tabular-nums">
               {orders.length}
             </p>
             {pendingOrders > 0 && (
@@ -153,13 +153,13 @@ export default function PerfilPage() {
           </div>
           <div className="bg-smoke/50 border border-border/30 rounded-sm p-4 md:p-5">
             <span className="text-[9px] font-mono uppercase tracking-[2px] text-neon/50">Gastado</span>
-            <p className="mt-1.5 font-display text-2xl md:text-3xl text-neon tracking-[1px] tabular-nums">
+            <p className="mt-1.5 font-display text-xl md:text-3xl text-neon tracking-[1px] tabular-nums">
               ${totalSpent.toFixed(2)}
             </p>
           </div>
           <div className="bg-smoke/50 border border-border/30 rounded-sm p-4 md:p-5">
             <span className="text-[9px] font-mono uppercase tracking-[2px] text-neon/50">Carrito</span>
-            <p className="mt-1.5 font-display text-2xl md:text-3xl text-paper tracking-[1px] tabular-nums">
+            <p className="mt-1.5 font-display text-xl md:text-3xl text-paper tracking-[1px] tabular-nums">
               {totalItems}
             </p>
             {totalItems > 0 && (
@@ -177,7 +177,7 @@ export default function PerfilPage() {
         </button>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-8 border-b border-border/10">
+        <div className="flex gap-1 mb-8 border-b border-border/10 overflow-x-auto no-scrollbar">
           {tabs.map((tab) => (
             <button
               key={tab.id}

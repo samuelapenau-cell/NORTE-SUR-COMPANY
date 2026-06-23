@@ -154,7 +154,7 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
       </section>
 
       {/* ── STATEMENT ── */}
-      <section className="relative min-h-[80dvh] flex items-center overflow-hidden">
+      <section className="relative min-h-[50dvh] md:min-h-[80dvh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/portada/Screenshot_2026-06-23-09-30-30-514_com.instagram.android-edit.jpg.jpeg"
@@ -172,7 +172,7 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
         </div>
         <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full py-20 md:py-28">
           <div className="max-w-[900px]">
-            <p className="font-display text-[clamp(1.5rem,4vw,3.5rem)] text-paper uppercase leading-[1.1] tracking-[1px]">
+            <p className="font-display text-[clamp(1.2rem,4vw,3.5rem)] text-paper uppercase leading-[1.1] tracking-[1px]">
               CREADOS PARA LA GRANDEZA. NO ES SOLO ROPA, ES UNA DECLARACIÓN.
             </p>
             <div className="h-[1px] w-16 bg-gradient-to-r from-neon to-transparent mt-8 mb-6" />

@@ -58,7 +58,7 @@ export default function NosotrosPage() {
             { num: "1", label: "Venezuela" },
           ].map((stat) => (
             <div key={stat.label} className="p-6 bg-smoke border border-border text-center">
-              <p className="font-display text-4xl md:text-5xl text-neon tracking-[1px]">{stat.num}</p>
+              <p className="font-display text-2xl md:text-5xl text-neon tracking-[1px]">{stat.num}</p>
               <p className="mt-2 text-[10px] text-stone/60 font-mono uppercase tracking-[2px]">{stat.label}</p>
             </div>
           ))}
