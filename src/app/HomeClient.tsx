@@ -154,9 +154,23 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
       </section>
 
       {/* ── STATEMENT ── */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 glow-statement pointer-events-none" />
-        <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+      <section className="relative min-h-[80dvh] flex items-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/portada/Screenshot_2026-06-23-09-30-30-514_com.instagram.android-edit.jpg.jpeg"
+            alt=""
+            fill
+            className="object-cover object-[50%_30%]"
+            sizes="100vw"
+            priority
+            quality={100}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/60 to-ink/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-l from-neon/[0.08] to-transparent" />
+          <div className="absolute inset-0 grain pointer-events-none" />
+        </div>
+        <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full py-20 md:py-28">
           <div className="max-w-[900px]">
             <p className="font-display text-[clamp(1.5rem,4vw,3.5rem)] text-paper uppercase leading-[1.1] tracking-[1px]">
               CREADOS PARA LA GRANDEZA. NO ES SOLO ROPA, ES UNA DECLARACIÓN.
