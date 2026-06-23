@@ -63,15 +63,16 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
                 src={src}
                 alt=""
                 fill
-                className="object-cover object-[50%_25%]"
+                className="object-cover object-[50%_25%] image-rendering-auto"
                 sizes="100vw"
                 priority={i === 0}
-                quality={85}
+                quality={100}
               />
             </div>
           ))}
           <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/70 to-ink/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
+          <div className="absolute inset-0 grain pointer-events-none" />
           <div className="absolute inset-0 glow-hero pointer-events-none" />
         </div>
 
@@ -318,7 +319,7 @@ export function HomeClient({ featured, categories }: { featured: Product[]; cate
         <div className="max-w-[1400px] mx-auto px-6 text-center relative z-10">
           <p className="text-[10px] font-mono uppercase tracking-[3px] text-stone mb-6">¿Listo?</p>
           <h2 className="font-display text-[clamp(2.5rem,8vw,6rem)] text-paper uppercase leading-[0.85] tracking-[-2px]">
-            Hacer tu
+            Para hacer tu
             <br />
             <span className="text-neon">pedido</span>
           </h2>
